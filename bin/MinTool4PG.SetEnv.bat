@@ -40,11 +40,9 @@ doskey ed="%ProgramFiles%\Notepad++\notepad++.exe" $*
 set MINGW=%ProgramFiles%\Git\usr\bin
 set PATH=%PATH%;%MINGW%
 
-:: set PBTHOME=%USERPROFILE%\Desktop\MinTool4PG
-set PATH=%PATH%;%PBTHOME%\bin
-
 ::
-:: PostgreSQL ::
+:: **PostgreSQL**
+:: psql 명령행인자를 최대한 줄인다.
 ::
 
 :: chcp 949
@@ -53,15 +51,25 @@ chcp 65001
 :: PROMPT [$t] $p$g$s
 PROMPT [%TIME: =0%] $p$g$s
 
-:: psql 명령행인자를 최대한 줄인다. 암호는 .pgpass 파일로 관리
+
+:: set PBTHOME=%USERPROFILE%\Desktop\MinTool4PG
+set PATH=%PATH%;%PBTHOME%\bin
+
+:: pg_service.conf
+set PGSYSCONFDIR=%PBTHOME%\bin\config
+set PGPASSFILE=%PGSYSCONFDIR%\pgpass.conf
+
+:: set PGHOST=127.0.0.1
 set PGPORT=5432
+:: set PGSERVICE=
+:: set PGCLUSTER=
+::  15 $ENV{'PGSYSCONFDIR'} //= '/etc/postgresql-common';
+:: set PG_CLUSTER_CONF_ROOT=
 set PGSSLMODE=require
 :: set PGCHANNELBINDING=disable
 set PGCHANNELBINDING=prefer
 set PGCLIENTENCODING=UTF8
 :: set PGPASSWORD=dkagh12!
-set PGPASSFILE=%PBTHOME%\bin\config\pgpass.conf
-
 
 :: psql "host=127.0.0.1 user=test dbname=test sslmode=require channel_binding=prefer"
 
