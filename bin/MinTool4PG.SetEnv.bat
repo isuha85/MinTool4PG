@@ -65,7 +65,9 @@ set PGPASSFILE=%PBTHOME%\bin\config\pgpass.conf
 
 :: psql "host=127.0.0.1 user=test dbname=test sslmode=require channel_binding=prefer"
 
-doskey dev2=psql -E "host=127.0.0.1 dbname=test user=test client_encoding=UTF8" $*
+doskey dev2=psql -e -E -W "host=127.0.0.1 dbname=test user=test" $*
 doskey dev=psql "host=127.0.0.1 dbname=test user=test" $*
 
-:: (W) 컴퓨터\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Nls\CodePage 이하에서 ACP 항목 값을 "949" 에서 "65001" 로 바꾸면 사라지긴 함
+:: psql (17.9)
+:: WARNING: Console code page (65001) differs from Windows code page (949)
+:: \HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Nls\CodePage 이하에서 ACP 항목 값을 "949" 에서 "65001" 로 바꾸면 해소되나 비권고
