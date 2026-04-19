@@ -11,6 +11,8 @@
 
 doskey alias=doskey /macros $*
 doskey a=doskey /macros ^| grep $*
+
+doskey gs=git status -uno $*
 doskey gits=git status -uno $*
 
 doskey h=doskey /history ^| tail -22
@@ -18,7 +20,9 @@ doskey lh=dir /A:-D /O:-D ^| grep "^202." ^|head -22
 
 doskey ll=dir /n /o:n /a ^| findstr /v "Volume Directory" ^| findstr /v DIR ^| findstr /v bytes
 
+::
 :: PostgreSQL ::
+::
 
 :: chcp 949
 chcp 65001
@@ -27,9 +31,9 @@ chcp 65001
 PROMPT [%TIME: =0%] $p$g$s
 
 :: set PGPASSWORD=dkagh12!
-set PGPASSFILE=%DBAHOME%\bin\config\pgpass.conf
+set PGPASSFILE=%PBTHOME%\bin\config\pgpass.conf
 set PGCLIENTENCODING=UTF8
 
 :: set PATH=%PATH%;C:\Program Files\PostgreSQL\17\bin
 :: set PATH=%PATH%;C:\Program Files\Git\cmd
-set PATH=%PATH%;%MINGW%;%DBAHOME%\bin
+set PATH=%PATH%;%MINGW%;%PBTHOME%\bin
