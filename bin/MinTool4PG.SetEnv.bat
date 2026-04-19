@@ -42,7 +42,6 @@ set PATH=%PATH%;%MINGW%
 
 ::
 :: **PostgreSQL**
-:: psql 명령행인자를 최대한 줄인다.
 ::
 
 :: chcp 949
@@ -59,12 +58,20 @@ set PATH=%PATH%;%PBTHOME%\bin
 set PGSYSCONFDIR=%PBTHOME%\bin\config
 set PGPASSFILE=%PGSYSCONFDIR%\pgpass.conf
 
-:: set PGHOST=127.0.0.1
+
+:: psql 명령행인자를 최대한 줄인다. 또는 %PGSYSCONFDIR%=pg_service.conf 내부의 공통 설정을 줄인다.
+:: set PGSERVICE=dev
+set PGHOST=1.1.1.1
 set PGPORT=5432
-:: set PGSERVICE=
-:: set PGCLUSTER=
-::  15 $ENV{'PGSYSCONFDIR'} //= '/etc/postgresql-common';
-:: set PG_CLUSTER_CONF_ROOT=
+
+:: set PGCLUSTER=NotUsed
+:: PostgreSQL 인스턴스들의 설정 파일들이 모여 있는 뿌리 경로 ( pg_ctlcluster 에서는 의미가 있을지도 모름 )
+:: set PG_CLUSTER_CONF_ROOT=/etc/postgresql
+
+:: **Linux Only**
+:: export PG_OOM_ADJUST_FILE=/proc/self/oom_score_adj
+:: export PG_OOM_ADJUST_VALUE=0  # 다중 프로세스 구조이므로, 부모(Postmaster 등 주요데몬)는 음수값, 자식(사용자세션프로세스) 는 양수값을 부여하여 자식을 먼저 죽게 한다.
+
 set PGSSLMODE=require
 :: set PGCHANNELBINDING=disable
 set PGCHANNELBINDING=prefer
@@ -73,7 +80,7 @@ set PGCLIENTENCODING=UTF8
 
 :: psql "host=127.0.0.1 user=test dbname=test sslmode=require channel_binding=prefer"
 
-doskey dev2=psql -e -E -W "host=127.0.0.1 dbname=test user=test" $*
+doskey dev2=psql -e -E -W "service=dev" $*
 doskey dev=psql "host=127.0.0.1 dbname=test user=test" $*
 
 :: psql (17.9)
