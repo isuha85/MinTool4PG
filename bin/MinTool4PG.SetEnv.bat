@@ -9,6 +9,10 @@
 :: * **Windows Terminal** 에서, [설정] - [프로필] - [명령 프롬프트] - [명령줄] 에서 아래를 적용
 ::   %SystemRoot%\System32\cmd.exe /k %PBTHOME%\\bin\\MinTool4PG.SetEnv.bat
 
+REM :: 1. 환경 변수 오염 방지 및 지연 확장 활성화
+REM setlocal EnableDelayedExpansion
+REM .. 블라블라 ..
+REM endlocal
 
 ::
 :: alisaes
@@ -25,6 +29,8 @@ doskey h=doskey /history ^| tail -22
 doskey lh=dir /A:-D /O:-D ^| grep "^202." ^|head -22
 doskey ll=dir /n /o:n /a ^| findstr /v "Volume Directory" ^| findstr /v DIR ^| findstr /v bytes
 
+doskey cdh=cd %PBTHOME%
+
 :: **EDITOR**
 :: doskey ed=vim $*
 :: doskey ed=code $*
@@ -33,6 +39,9 @@ doskey ed="%ProgramFiles%\Notepad++\notepad++.exe" $*
 ::
 :: ETC
 ::
+
+:: PROMPT [$t] $p$g$s
+PROMPT [%TIME: =0%] $p$g$s
 
 :: set PATH=%PATH%;C:\Program Files\PostgreSQL\17\bin
 :: set PATH=%PATH%;C:\Program Files\Git\cmd
@@ -46,10 +55,7 @@ set PATH=%PATH%;%MINGW%
 
 :: chcp 949
 chcp 65001
-
-:: PROMPT [$t] $p$g$s
-PROMPT [%TIME: =0%] $p$g$s
-
+:: (정상) `psql (17.9)` --> WARNING: Console code page (65001) differs from Windows code page (949)
 
 :: set PBTHOME=%USERPROFILE%\Desktop\MinTool4PG
 set PATH=%PATH%;%PBTHOME%\bin
@@ -60,9 +66,11 @@ set PGPASSFILE=%PGSYSCONFDIR%\pgpass.conf
 
 
 :: psql 명령행인자를 최대한 줄인다. 또는 %PGSYSCONFDIR%=pg_service.conf 내부의 공통 설정을 줄인다.
-:: set PGSERVICE=dev
+:: set PGSERVICE=
 set PGHOST=1.1.1.1
 set PGPORT=5432
+:: set PGUSER=
+:: set PGDATABASE=
 
 :: set PGCLUSTER=NotUsed
 :: PostgreSQL 인스턴스들의 설정 파일들이 모여 있는 뿌리 경로 ( pg_ctlcluster 에서는 의미가 있을지도 모름 )
