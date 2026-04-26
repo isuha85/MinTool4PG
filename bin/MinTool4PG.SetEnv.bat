@@ -9,10 +9,7 @@
 :: * **Windows Terminal** 에서, [설정] - [프로필] - [명령 프롬프트] - [명령줄] 에서 아래를 적용
 ::   %SystemRoot%\System32\cmd.exe /k %PBTHOME%\\bin\\MinTool4PG.SetEnv.bat
 
-REM :: 1. 환경 변수 오염 방지 및 지연 확장 활성화
-REM setlocal EnableDelayedExpansion
-REM .. 블라블라 ..
-REM endlocal
+:: ---
 
 ::
 :: alisaes
@@ -29,7 +26,13 @@ doskey h=doskey /history ^| tail -22
 doskey lh=dir /A:-D /O:-D ^| grep "^202." ^|head -22
 doskey ll=dir /n /o:n /a ^| findstr /v "Volume Directory" ^| findstr /v DIR ^| findstr /v bytes
 
-doskey cdh=cd %PBTHOME%
+:: 'cd' 대신 'pd'를 써서 이동하고, '-'를 입력하면 되돌아오게 설정
+doskey pd=pushd $*
+doskey -=popd
+
+doskey cdh=pushd %PBTHOME%
+doskey cds=pushd %PBTHOME%\stmt
+
 
 :: **EDITOR**
 :: doskey ed=vim $*
@@ -88,8 +91,9 @@ set PGCLIENTENCODING=UTF8
 
 :: psql "host=127.0.0.1 user=test dbname=test sslmode=require channel_binding=prefer"
 
+doskey dev=psql "host=127.0.0.1 dbname=test user=test" -e $*
+doskey devadm=psql "service=devadm" -e $*
 doskey dev2=psql -e -E -W "service=dev" $*
-doskey dev=psql "host=127.0.0.1 dbname=test user=test" $*
 
 :: psql (17.9)
 :: WARNING: Console code page (65001) differs from Windows code page (949)
